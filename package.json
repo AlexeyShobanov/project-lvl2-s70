@@ -1,0 +1,40 @@
+{
+  "name": "project-lvl2-s70",
+  "version": "0.0.2",
+  "description": "The project for the second level",
+  "main": "dist/index.js",
+  "bin": {
+    "gendiff": "dist/bin/gendiff.js"
+  },
+  "scripts": {
+    "test": "make lint",
+    "eslint": "eslint",
+    "babel-node": "babel-node",
+    "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexeyShobanov/project-lvl2-s70.git"
+  },
+  "author": "alshad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexeyShobanov/project-lvl2-s70/issues"
+  },
+  "homepage": "https://github.com/AlexeyShobanov/project-lvl2-s70#readme",
+  "devDependencies": {
+    "babel-cli": "*",
+    "babel-core": "*",
+    "babel-eslint": "^7.1.1",
+    "babel-preset-env": "*",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-stage-0": "*",
+    "eslint": "^3.18.0",
+    "eslint-config-airbnb-base": "^11.1.0",
+    "eslint-plugin-import": "^2.2.0"
+  },
+  "dependencies": {
+    "commander": "^2.9.0"
+  }
+}
