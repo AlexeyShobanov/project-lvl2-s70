@@ -1,20 +1,13 @@
 import assert from 'assert';
-import { readConfigFile, parseJson, compareObj } from '../src/commonFile';
+import { readConfigFile, parseJson } from '../src/commonFile';
+import gendiff from '../src/index';
 
-const originStrData1 = readConfigFile('./__tests__/before.json');
-const originStrData2 = readConfigFile('./__tests__/after.json');
-const objForCompare1 = parseJson(originStrData1);
-const objForCompare2 = parseJson(originStrData2);
-const resultCompare = compareObj(objForCompare1, objForCompare2);
+const resultCompare = gendiff('./__tests__/before.json', './__tests__/after.json');
 const originStrBench = readConfigFile('./__tests__/result.json');
 const objBench = parseJson(originStrBench);
+const originStrData1 = readConfigFile('./__tests__/before.json');
+const originStrData2 = readConfigFile('./__tests__/after.json');
 
 test(`The difference between\n${originStrData1}\nand\n${originStrData2}\nequal\n${originStrBench}`, () => {
   assert.deepEqual(resultCompare, objBench);
 });
-
-/* const originStrBench = readConfigFile('./result.json');
-const objBench = parseJson(originStrBench);
-const resultCompare = gendiff('before.json', 'after.json');
-const originStrData1 = readConfigFile('./before.json');
-const originStrData2 = readConfigFile('./after.json'); */
