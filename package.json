@@ -1,6 +1,6 @@
 {
   "name": "project-lvl2-s70",
-  "version": "0.0.2",
+  "version": "0.0.9",
   "description": "The project for the second level",
   "main": "dist/index.js",
   "bin": {

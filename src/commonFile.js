@@ -1,4 +1,35 @@
+import commander from 'commander';
+import fs from 'fs';
 import _ from 'lodash';
+
+const parseCommandLine = () => {
+  commander
+  .version('0.0.2')
+  .description('Compares two configuration files and shows a difference')
+  .arguments('<first_config> <second_config>')
+  .option('-f, --format [type]', 'Output format')
+  .parse(process.argv);
+
+  if (typeof commander.args[0] === 'undefined' && typeof commander.args[1] === 'undefined') {
+    console.error('Error: missing required options or arguments');
+    commander.outputHelp();
+    process.exit(1);
+  } else if (typeof commander.args[1] === 'undefined') {
+    console.error('Error: missing required argument `second_config`');
+    process.exit(1);
+  }
+  return [commander.args, commander.format];
+};
+
+const readConfigFile = (path) => {
+  const data = fs.readFileSync(path, 'utf8');
+  return data;
+};
+
+const parseJson = (data) => {
+  const inputObj = JSON.parse(data);
+  return inputObj;
+};
 
 const compareObj = (inputObj1, inputObj2) => {
   const comparedWithoutUniqObj2 = _.reduce(inputObj1, (acc, value, key) => {
@@ -33,4 +64,4 @@ const compareObj = (inputObj1, inputObj2) => {
   return Object.assign({}, comparedWithoutUniqObj2, comparedUniqObj2);
 };
 
-export default compareObj;
+export { parseCommandLine, readConfigFile, parseJson, compareObj };
