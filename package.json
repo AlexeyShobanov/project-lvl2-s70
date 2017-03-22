@@ -1,6 +1,14 @@
 {
   "name": "project-lvl2-s70",
-  "version": "0.0.13",
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "./node_modules",
+      "./git",
+      "./dist",
+      "./__test__"
+    ]
+  },
+  "version": "0.2.2",
   "description": "The project for the second level",
   "main": "dist/index.js",
   "bin": {

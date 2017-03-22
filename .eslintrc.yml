@@ -13,4 +13,4 @@ extends:
 rules:
   no-console: 0
   no-param-reassign: 0
-  max-len: [1, 150, 4]
+  prefer-const: 0
