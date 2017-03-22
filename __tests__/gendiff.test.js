@@ -9,6 +9,6 @@ const resultCompare = compareObj(objForCompare1, objForCompare2);
 const originStrBench = readConfigFile('/Users/alexey/projects/project-lvl2-s70/__tests__/result.json');
 const objBench = parseJson(originStrBench);
 
-test(`The difference between\n${originStrData1}\nand\n${originStrData1}\nequal\n${originStrBench}`, () => {
+test(`The difference between\n${originStrData1}\nand\n${originStrData2}\nequal\n${originStrBench}`, () => {
   assert.deepEqual(resultCompare, objBench);
 });
