@@ -1,14 +1,21 @@
 import assert from 'assert';
-import _ from 'lodash';
+// import _ from 'lodash';
 import gendiff from '../src/';
 
-const result = _.fromPairs([
+/* const result = _.fromPairs([
   [' host', 'hexlet.io'],
   ['+ timeout', 20],
   ['- timeout', 50],
   ['- proxy', '123.234.53.22'],
   ['+ verbose', true],
-]);
+]); */
+
+const result = {};
+result[' host'] = 'hexlet.io';
+result['+ timeout'] = 20;
+result['- timeout'] = 50;
+result['- proxy'] = '123.234.53.22';
+result['+ verbose'] = true;
 
 test('The difference between a couple of files json', () => {
   const pathToBeforJson = './__tests__/__fixtures__/before.json';

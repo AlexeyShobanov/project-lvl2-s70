@@ -19,3 +19,4 @@ ratings:
 exclude_paths:
   - node_modules/*
   - dist/*
+  - __test__/__fixtures__/*
