@@ -1,8 +1,10 @@
 import path from 'path';
 import _ from 'lodash';
+import fs from 'fs';
 import JsonData from './JsonData';
 import YamlData from './YamlData';
-import { readConfigFile } from './commonFile';
+import IniData from './IniData';
+// import readConfigFile from './commonFile';
 
 const compareObj = (inputObj1, inputObj2) => {
   const sumKeys = _.union(_.keys(inputObj1), _.keys(inputObj2));
@@ -20,6 +22,8 @@ const compareObj = (inputObj1, inputObj2) => {
   return _.fromPairs(resultPairArr);
 };
 
+const readConfigFile = pathToFile => fs.readFileSync(pathToFile, 'utf8');
+
 const createDataClass = (pathToFile) => {
   const originStrData = readConfigFile(pathToFile);
   const extendFile = path.extname(pathToFile);
@@ -28,6 +32,8 @@ const createDataClass = (pathToFile) => {
       return new YamlData(originStrData);
     case '.json':
       return new JsonData(originStrData);
+    case '.ini':
+      return new IniData(originStrData);
     default:
       break;
   }

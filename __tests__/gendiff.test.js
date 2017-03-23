@@ -21,3 +21,9 @@ test('The difference between a couple of files yaml', () => {
   const pathToAfterYaml = './__tests__/__fixtures__/after.yml';
   assert.deepEqual(gendiff(pathToBeforYaml, pathToAfterYaml), result);
 });
+
+test('The difference between a couple of files ini', () => {
+  const pathToBeforIni = './__tests__/__fixtures__/before.ini';
+  const pathToAfterIni = './__tests__/__fixtures__/after.ini';
+  assert.deepEqual(gendiff(pathToBeforIni, pathToAfterIni), result);
+});
