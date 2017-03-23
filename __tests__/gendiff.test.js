@@ -1,17 +1,23 @@
 import assert from 'assert';
-import { readConfigFile, parseJson } from '../src/commonFile';
-import gendiff from '../src/index';
+import _ from 'lodash';
+import gendiff from '../src/';
+
+const result = _.fromPairs([
+  [' host', 'hexlet.io'],
+  ['+ timeout', 20],
+  ['- timeout', 50],
+  ['- proxy', '123.234.53.22'],
+  ['+ verbose', true],
+]);
 
 test('The difference between a couple of files json', () => {
   const pathToBeforJson = './__tests__/__fixtures__/before.json';
   const pathToAfterJson = './__tests__/__fixtures__/after.json';
-  const pathToResul = './__tests__/__fixtures__/result.json';
-  const result = parseJson(readConfigFile(pathToResul));
   assert.deepEqual(gendiff(pathToBeforJson, pathToAfterJson), result);
 });
 
-/* test('The difference between a couple of files yaml', () => {
- assert.deepEqual
- (gendiff('./__tests__/__fixtures__/before.yml', './__tests__/__fixtures__/after.yml'),
- parseJson(readConfigFile('./__tests__/__fixtures__/result.json')));
- }); */
+test('The difference between a couple of files yaml', () => {
+  const pathToBeforYaml = './__tests__/__fixtures__/before.yml';
+  const pathToAfterYaml = './__tests__/__fixtures__/after.yml';
+  assert.deepEqual(gendiff(pathToBeforYaml, pathToAfterYaml), result);
+});
