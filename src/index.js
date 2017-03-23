@@ -1,5 +1,22 @@
 // import path from 'path';
-import { readConfigFile, parseJson, compareObj } from './commonFile';
+import _ from 'lodash';
+import { readConfigFile, parseJson } from './commonFile';
+
+const compareObj = (inputObj1, inputObj2) => {
+  const sumKeys = _.union(_.keys(inputObj1), _.keys(inputObj2));
+  const resultPairArr = _.reduce(sumKeys, (acc, key) => {
+    if (_.has(inputObj1, key) && _.has(inputObj2, key)) {
+      if (_.isEqual(inputObj1[key], inputObj2[key])) {
+        return _.concat(acc, [[` ${key}`, inputObj1[key]]]);
+      }
+      return _.concat(acc, [[`+ ${key}`, inputObj2[key]], [`- ${key}`, inputObj1[key]]]);
+    } else if (_.has(inputObj1, key)) {
+      return _.concat(acc, [[`- ${key}`, inputObj1[key]]]);
+    }
+    return _.concat(acc, [[`+ ${key}`, inputObj2[key]]]);
+  }, []);
+  return _.fromPairs(resultPairArr);
+};
 
 export default (path1, path2) => {
   const originStrData1 = readConfigFile(path1);
