@@ -2,12 +2,12 @@
 import _ from 'lodash';
 import gendiff from '../src/';
 
-const result = `{\n  ${_.join([
+const result = `{\n   ${_.join([
   '  host: hexlet.io',
   '+ timeout: 20',
   '- timeout: 50',
   '- proxy: 123.234.53.22',
-  '+ verbose: true'], '\n  ')}\n}`;
+  '+ verbose: true'], '\n   ')}\n}`;
 
 test('The difference between a couple of files json', () => {
   const pathToBeforJson = './__tests__/__fixtures__/before.json';
