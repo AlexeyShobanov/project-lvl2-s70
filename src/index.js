@@ -9,21 +9,21 @@ const makeAstForCompare = (inputObj1, inputObj2) => {
   const ast = _.map(sumKeys, (key) => {
     if (_.has(inputObj1, key) && _.has(inputObj2, key)) {
       if (inputObj1[key] instanceof Object) {
-        return { stat: '', key, value: '', child: makeAstForCompare(inputObj1[key], inputObj2[key]) };
+        return { stat: '', key, value: '', oldValue: '', child: makeAstForCompare(inputObj1[key], inputObj2[key]) };
       } else if (_.isEqual(inputObj1[key], inputObj2[key])) {
         return { stat: '', key, value: inputObj1[key], child: [] };
       }
-      return { stat: 'updated', key, value: [inputObj2[key], inputObj1[key]], child: [] };
+      return { stat: 'updated', key, value: inputObj2[key], oldValue: inputObj1[key], child: [] };
     } else if (_.has(inputObj1, key)) {
       if (inputObj1[key] instanceof Object) {
-        return { stat: 'removed', key, value: '', child: makeAstForCompare(inputObj1[key], inputObj1[key]) };
+        return { stat: 'removed', key, value: '', oldValue: '', child: makeAstForCompare(inputObj1[key], inputObj1[key]) };
       }
-      return { stat: 'removed', key, value: inputObj1[key], child: [] };
+      return { stat: 'removed', key, value: '', oldValue: inputObj1[key], child: [] };
     }
     if (inputObj2[key] instanceof Object) {
-      return { stat: 'added', key, value: '', child: makeAstForCompare(inputObj2[key], inputObj2[key]) };
+      return { stat: 'added', key, value: '', oldValue: '', child: makeAstForCompare(inputObj2[key], inputObj2[key]) };
     }
-    return { stat: 'added', key, value: inputObj2[key], child: [] };
+    return { stat: 'added', key, value: inputObj2[key], oldValue: '', child: [] };
   });
   return ast;
 };

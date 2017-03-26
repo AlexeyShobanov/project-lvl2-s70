@@ -9,9 +9,9 @@ const renderDefault = (ast, indent = 0) => {
       case 'added':
         return acc.concat(`\n${_.pad('', stepOfIndets)}+ ${node.key}: ${body}`);
       case 'removed':
-        return acc.concat(`\n${_.pad('', stepOfIndets)}- ${node.key}: ${body}`);
+        return acc.concat(`\n${_.pad('', stepOfIndets)}- ${node.key}: ${node.child.length === 0 ? node.oldValue : renderDefault(node.child, (stepOfIndets))}`);
       case 'updated':
-        return acc.concat(`\n${_.pad('', stepOfIndets)}+ ${node.key}: ${body[0]}`, `\n${_.pad('', stepOfIndets)}- ${node.key}: ${body[1]}`);
+        return acc.concat(`\n${_.pad('', stepOfIndets)}+ ${node.key}: ${node.value}`, `\n${_.pad('', stepOfIndets)}- ${node.key}: ${node.oldValue}`);
       default:
         return acc.concat(`\n${_.pad('', stepOfIndets)}  ${node.key}: ${body}`);
     }
@@ -29,13 +29,32 @@ const renderPlain = (ast, root = '') => {
         return acc.concat(`\nProperty ${root}${node.key} was ${node.stat} ${body}`);
       }
       case 'updated': {
-        const body = node.child.length === 0 ? node.value : renderPlain(node.child, `${node.key}.`);
-        return acc.concat(`\nProperty ${root}${node.key} was ${node.stat}. From ${body[0]} to ${body[1]}`);
+        return acc.concat(`\nProperty ${root}${node.key} was ${node.stat}. From ${node.value} to ${node.oldValue}`);
       }
       default:
         return node.child.length === 0 ? acc : acc.concat(renderPlain(node.child, node.key));
     }
   }, '');
+  return result;
+};
+
+const renderJson = (ast, root = '') => {
+  const result = _.reduce(ast, (acc, node) => {
+    const body = node.child.length === 0 ? node.value : node.child;
+    switch (node.stat) {
+      case 'removed': {
+        return { ...acc, removed: Object.assign({}, acc.removed, { [node.key]: body }) };
+      }
+      case 'added': {
+        return { ...acc, added: Object.assign({}, acc.added, { [node.key]: body }) };
+      }
+      case 'updated': {
+        return { ...acc, updated: Object.assign({}, acc.updated, { [node.key]: body }) };
+      }
+      default:
+        return acc;
+    }
+  }, { removed: {}, added: {}, updated: {} });
   return result;
 };
 
@@ -45,6 +64,8 @@ export default (format) => {
       return ast => renderDefault(ast);
     case 'plain':
       return ast => renderPlain(ast);
+    case 'json':
+      return ast => renderJson(ast);
     default:
       break;
   }
