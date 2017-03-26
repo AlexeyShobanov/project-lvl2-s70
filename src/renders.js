@@ -2,17 +2,18 @@ import _ from 'lodash';
 
 
 const renderDefault = (ast, indent = 0) => {
+  const stepOfIndets = indent + 3;
   const result = _.reduce(ast, (acc, node) => {
-    const body = node.child.length === 0 ? node.value : renderDefault(node.child, (indent + 3));
+    const body = node.child.length === 0 ? node.value : renderDefault(node.child, (stepOfIndets));
     switch (node.stat) {
       case 'added':
-        return acc.concat(`\n${_.pad('', indent + 3)}+ ${node.key}: ${body}`);
+        return acc.concat(`\n${_.pad('', stepOfIndets)}+ ${node.key}: ${body}`);
       case 'removed':
-        return acc.concat(`\n${_.pad('', indent + 3)}- ${node.key}: ${body}`);
+        return acc.concat(`\n${_.pad('', stepOfIndets)}- ${node.key}: ${body}`);
       case 'updated':
-        return acc.concat(`\n${_.pad('', indent + 3)}+ ${node.key}: ${body[0]}`, `\n${_.pad('', indent + 3)}- ${node.key}: ${body[1]}`);
+        return acc.concat(`\n${_.pad('', stepOfIndets)}+ ${node.key}: ${body[0]}`, `\n${_.pad('', stepOfIndets)}- ${node.key}: ${body[1]}`);
       default:
-        return acc.concat(`\n${_.pad('', indent + 3)}  ${node.key}: ${body}`);
+        return acc.concat(`\n${_.pad('', stepOfIndets)}  ${node.key}: ${body}`);
     }
   }, '');
   return `{${result}\n${_.pad('', indent)}}`;
