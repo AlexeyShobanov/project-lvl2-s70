@@ -38,7 +38,7 @@ const renderPlain = (ast, root = '') => {
   return result;
 };
 
-const renderJson = (ast, root = '') => {
+const renderJson = (ast) => {
   const result = _.reduce(ast, (acc, node) => {
     const body = node.child.length === 0 ? node.value : node.child;
     switch (node.stat) {
