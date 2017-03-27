@@ -2,7 +2,8 @@ import path from 'path';
 import _ from 'lodash';
 import fs from 'fs';
 import getParser from './parsers';
-import getRender from './renders';
+import getRenderer from './renderers';
+
 
 const makeAstForCompare = (inputObj1, inputObj2) => {
   const sumKeys = _.union(_.keys(inputObj1), _.keys(inputObj2));
@@ -33,7 +34,7 @@ export const readConfigFile = pathToFile => fs.readFileSync(pathToFile, 'utf8');
 export default (pathToFile1, pathToFile2, format = 'default') => {
   const originStrData1 = readConfigFile(pathToFile1);
   const originStrData2 = readConfigFile(pathToFile2);
-  const objForCompare1 = getParser[path.extname(pathToFile1)](originStrData1);
-  const objForCompare2 = getParser[path.extname(pathToFile2)](originStrData2);
-  return getRender[format](makeAstForCompare(objForCompare1, objForCompare2));
+  const objForCompare1 = getParser(path.extname(pathToFile1))(originStrData1);
+  const objForCompare2 = getParser(path.extname(pathToFile2))(originStrData2);
+  return getRenderer(format)(makeAstForCompare(objForCompare1, objForCompare2));
 };

@@ -1,9 +1,9 @@
 import _ from 'lodash';
 
-const renderDefault = (ast, initialIndent = 0) => {
+const rendererDefault = (ast, initialIndent = 0) => {
   const indent = initialIndent + 3;
   const result = _.reduce(ast, (acc, node) => {
-    const body = node.children.length === 0 ? node.value : renderDefault(node.children, indent);
+    const body = node.children.length === 0 ? node.value : rendererDefault(node.children, indent);
     switch (node.type) {
       case 'added':
         return acc.concat(`\n${_.pad('', indent)}+ ${node.key}: ${body}`);
@@ -18,4 +18,4 @@ const renderDefault = (ast, initialIndent = 0) => {
   return `{${result}\n${_.pad('', initialIndent)}}`;
 };
 
-export default renderDefault;
+export default rendererDefault;

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const renderPlain = (ast, root = '') => {
+const rendererPlain = (ast, root = '') => {
   const result = _.reduce(ast, (acc, node) => {
     switch (node.type) {
       case 'removed':
@@ -13,10 +13,10 @@ const renderPlain = (ast, root = '') => {
         return acc.concat(`\nProperty ${root}${node.key} was ${node.stat}. From ${node.value} to ${node.oldValue}`);
       }
       default:
-        return node.children.length === 0 ? acc : acc.concat(renderPlain(node.children, `${node.key}.`));
+        return node.children.length === 0 ? acc : acc.concat(rendererPlain(node.children, `${node.key}.`));
     }
   }, '');
   return result;
 };
 
-export default renderPlain;
+export default rendererPlain;
