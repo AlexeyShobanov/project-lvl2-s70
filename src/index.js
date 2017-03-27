@@ -36,4 +36,5 @@ export default (pathToFile1, pathToFile2, format = 'default') => {
   const objForCompare1 = getParser[path.extname(pathToFile1)](originStrData1);
   const objForCompare2 = getParser[path.extname(pathToFile2)](originStrData2);
   return getRender[format](makeAstForCompare(objForCompare1, objForCompare2));
+  //return JSON.stringify(makeAstForCompare(objForCompare1, objForCompare2));
 };

@@ -5,8 +5,9 @@ const getValue = (node) => {
     return node.value;
   }
   return _.reduce(node.children, (obj, item) => {
-    const value = item.value instanceof Object ? getValue(item.value, item.key) : item.value;
-    const newAcc = { ...obj, [item.key]: value };
+    const value = _.has(item, 'children') && item.children.length !== 0 ? getValue(item.children) : item.value;
+    const newAcc = _.merge(obj, { [item.key]: value });
+    // { ...obj, [item.key]: value };
     return newAcc;
   }, {});
 };
@@ -14,10 +15,10 @@ const getValue = (node) => {
 const makeNodeJson = (node, acc, root) => {
   const newNode = { [node.key]: getValue(node) };
   if (root !== '') {
-    if (!_.has(acc[node.type], [root])) {
-      return { ...acc, [node.type]: _.merge(...acc[node.type], { [root]: newNode }) };
-    }
-    return { ...acc, [node.type]: _.merge(acc[node.type][root], newNode) };
+    /* if (!_.has(acc[node.type], [root])) {
+      return { ...acc, [node.type]: _.merge(acc[node.type], { [root]: newNode }) };
+    } */
+    return { ...acc, [node.type]: _.merge(acc[node.type], { [root]: newNode }) };
   }
   return { ...acc, [node.type]: _.merge(acc[node.type], newNode) };
 };
