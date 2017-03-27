@@ -2,7 +2,7 @@ install:
 		npm install
 
 start:
-		npm run babel-node -- 'src/bin/gendiff.js' --format plain ./__tests__/__fixtures__/_before.yml ./__tests__/__fixtures__/_after.yml
+		npm run babel-node -- 'src/bin/gendiff.js' --format json ./__tests__/__fixtures__/_before.yml ./__tests__/__fixtures__/_after.yml
 
 publish:
 		npm publish
